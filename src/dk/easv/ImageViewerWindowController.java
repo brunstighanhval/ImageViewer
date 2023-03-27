@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -18,6 +19,8 @@ public class ImageViewerWindowController
     private final List<Image> images = new ArrayList<>();
     public Button btnLoad;
     public Button btnStart;
+    public Slider slider;
+    public Button btnStop;
     private int currentImageIndex = 0;
 
     @FXML
