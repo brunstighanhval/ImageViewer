@@ -6,6 +6,7 @@ import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -15,6 +16,8 @@ import javafx.stage.Stage;
 public class ImageViewerWindowController
 {
     private final List<Image> images = new ArrayList<>();
+    public Button btnLoad;
+    public Button btnStart;
     private int currentImageIndex = 0;
 
     @FXML
@@ -69,5 +72,11 @@ public class ImageViewerWindowController
         {
             imageView.setImage(images.get(currentImageIndex));
         }
+    }
+
+    public void handleBtnStartAction(ActionEvent actionEvent) {
+    }
+
+    public void handleBtnStopAction(ActionEvent actionEvent) {
     }
 }
