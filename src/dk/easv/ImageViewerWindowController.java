@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,11 +28,13 @@ public class ImageViewerWindowController implements Initializable
     private final List<Image> images = new ArrayList<>();
     public Button btnStartSlideshow;
     public Slider sldSlideShow;
+    public Label stiLabel;
     private int currentImageIndex = 0;
     private Task<Void> task;
     private Thread th;
     private boolean b;
 
+    private List<File> files;
     @FXML
     Parent root;
 
@@ -45,7 +48,7 @@ public class ImageViewerWindowController implements Initializable
         fileChooser.setTitle("Select image files");
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Images",
                 "*.png", "*.jpg", "*.gif", "*.tif", "*.bmp"));
-        List<File> files = fileChooser.showOpenMultipleDialog(new Stage());
+         files = fileChooser.showOpenMultipleDialog(new Stage());
 
         if (!files.isEmpty()) {
             files.forEach((File f) ->
@@ -106,11 +109,18 @@ public class ImageViewerWindowController implements Initializable
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                imageView.setImage(images.get(count));
-                                count++;
-                                if (count >= images.size()) {
+
+                                if (count == images.size()) {
                                     count = 0;
                                 }
+
+
+
+                                imageView.setImage(images.get(count));
+                                stiLabel.setText(files.get(count).getName());
+
+                                count++;
+
                             }
                         });
                         Thread.sleep((long) (sldSlideShow.getValue() * 1000));
