@@ -98,11 +98,10 @@ public class ImageViewerWindowController implements Initializable
         Task<Void> task = new Task<Void>() {
             @Override
             public Void call() throws Exception {
-                for (int i = 0; i < images.size(); i++) {
+                while (true) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-
                             imageView.setImage(images.get(count));
                             count++;
                             if (count >= images.size()) {
@@ -110,10 +109,8 @@ public class ImageViewerWindowController implements Initializable
                             }
                         }
                     });
-
                     Thread.sleep((long) (sldSlideShow.getValue() * 1000));
                 }
-                return null;
             }
         };
 
