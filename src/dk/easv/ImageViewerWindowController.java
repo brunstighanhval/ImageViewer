@@ -92,34 +92,34 @@ public class ImageViewerWindowController implements Initializable
 
  */
 
+
     //then the working logic in my eventhandler
-    Task task = new Task<Void>() {
-        @Override
-        public Void call() throws Exception {
-            for (int i = 0; i < images.size(); i++) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        imageView.setImage(images.get(count));
-                        count++;
-                        if (count >= images.size()) {
-                            count = 0;
-                        }
-                    }
-                });
-
-                Thread.sleep(5000);
-            }
-            return null;
-        }
-    };
-
     public void handleStartsSlideShow(ActionEvent actionEvent) {
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() throws Exception {
+                for (int i = 0; i < images.size(); i++) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            imageView.setImage(images.get(count));
+                            count++;
+                            if (count >= images.size()) {
+                                count = 0;
+                            }
+                        }
+                    });
+
+                    Thread.sleep((long) (sldSlideShow.getValue() * 1000));
+                }
+                return null;
+            }
+        };
+
         Thread th = new Thread(task);
         th.setDaemon(true);
         th.start();
-
     }
 
     @Override
@@ -127,7 +127,7 @@ public class ImageViewerWindowController implements Initializable
         sldSlideShow.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-
+                // You can add code here to update the delay time based on the slider value
             }
         });
     }

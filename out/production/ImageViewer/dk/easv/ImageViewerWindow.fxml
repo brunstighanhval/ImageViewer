@@ -8,9 +8,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.ImageViewerWindowController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.ImageViewerWindowController">
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="1091.0" BorderPane.alignment="CENTER">
+            
             <children>
                 <ButtonBar prefHeight="57.0" prefWidth="388.0">
                     <buttons>
@@ -27,7 +28,7 @@
                         <Button id="btnNext" fx:id="btnNext" mnemonicParsing="false" onAction="#handleBtnNextAction" text="Next" />
                     </buttons>
                 </ButtonBar>
-            <Slider fx:id="sldSlideShow" />
+            <Slider fx:id="sldSlideShow" max="5.0" min="1.0" value="3.0" />
             <Button fx:id="btnStartSlideshow" mnemonicParsing="false" onAction="#handleStartsSlideShow" text="StartSlideshow" />
             </children>
             <opaqueInsets>
