@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,7 +21,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class ImageViewerWindowController implements Initializable
 {
@@ -31,6 +28,9 @@ public class ImageViewerWindowController implements Initializable
     public Button btnStartSlideshow;
     public Slider sldSlideShow;
     private int currentImageIndex = 0;
+    private Task<Void> task;
+    private Thread th;
+    private boolean b;
 
     @FXML
     Parent root;
@@ -95,28 +95,32 @@ public class ImageViewerWindowController implements Initializable
 
     //then the working logic in my eventhandler
     public void handleStartsSlideShow(ActionEvent actionEvent) {
-        Task<Void> task = new Task<Void>() {
-            @Override
-            public Void call() throws Exception {
-                while (true) {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            imageView.setImage(images.get(count));
-                            count++;
-                            if (count >= images.size()) {
-                                count = 0;
+        if(th != null && b) {
+            th.interrupt();
+            b = false;
+        } else {
+            task = new Task<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    while (true) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                imageView.setImage(images.get(count));
+                                count++;
+                                if (count >= images.size()) {
+                                    count = 0;
+                                }
                             }
-                        }
-                    });
-                    Thread.sleep((long) (sldSlideShow.getValue() * 1000));
+                        });
+                        Thread.sleep((long) (sldSlideShow.getValue() * 1000));
+                    }
                 }
-            }
-        };
-
-        Thread th = new Thread(task);
-        th.setDaemon(true);
-        th.start();
+            };
+            th = new Thread(task);
+            th.start();
+            b = true;
+        }
     }
 
     @Override
